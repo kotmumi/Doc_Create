@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<assembly xmlns="urn:schemas-microsoft-com:asm.v1" manifestVersion="1.0">
+
+  <assemblyIdentity name="Doc_Create" version="1.0.0.0"></assemblyIdentity>
+
+  <clrClass clsid="{c3e8521a-277f-4e93-b875-7c24ca47ddac}" progid="Doc_Create.StandardAddInServer" threadingModel="Both" name="Doc_Create.StandardAddInServer" runtimeVersion=""></clrClass>
+
+  <file name="Doc_Create.dll" hashalg="SHA1"></file>
+
+</assembly>
