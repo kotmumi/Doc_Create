@@ -13,22 +13,15 @@ namespace InvAddIn
         public void Rule()
         {
             GettingPath gettingPath = new GettingPath();
-            TransientObjects _transientObjects;
             PartDocument oDrawDoc;
             ModelParameters oParam;
             BOM oBOM = null;
             DocumentsEnumerator oRefDocs = gettingPath.oAsmDoc.AllReferencedDocuments;
             string CustomName;
-            string oAsmNameDXF = "Чертежи\\Резка DXF";
-            string oAsmNameDXF_PDF = "Чертежи\\Резка и Гибка DXF-PDF";
             string oFolderDrowing = gettingPath.oAsmDocPath+"Чертежи";
-            string _oFolderDXF = gettingPath.oAsmDocPath  + oAsmNameDXF;
-            string _oFolderDXF_PDF = gettingPath.oAsmDocPath + oAsmNameDXF_PDF;
             string _oMaterial = "...";
             try
             {
-                CreatFolderSave creatFolderSaveDXF = new CreatFolderSave(_oFolderDXF);
-                CreatFolderSave creatFolderSaveDXF_PDF = new CreatFolderSave(_oFolderDXF_PDF);
                 oBOM = gettingPath.oAsmDoc.ComponentDefinition.BOM;
                 oBOM.StructuredViewEnabled = true;
                 oBOM.PartsOnlyViewEnabled = true;
@@ -64,37 +57,13 @@ namespace InvAddIn
                         {
                             CustomName = "??мм-??шт";
                         }
-                        SheetMetalComponentDefinition oCompDef =(SheetMetalComponentDefinition) oDrawDoc.ComponentDefinition;
-                        string _oFolderDXForPDF= _oFolderDXF;
-                        foreach (PartFeature oFeaturel in oCompDef.Features)
-                        {
-                            switch (oFeaturel.Type) 
-                            {
-                                case Inventor.ObjectTypeEnum.kFlangeFeatureObject:
-                                    _oFolderDXForPDF = _oFolderDXF_PDF;
-                                    break;
-                                default:
-                                 break;
-                            }
-                        }
-                        if (oCompDef.HasFlatPattern == false) 
-                        {
-                            oCompDef.Unfold();
-                        }
-                        else
-                        {
-                            oCompDef.FlatPattern.Edit();
-                        }
-                        _transientObjects = new TransientObjects(gettingPath.inventorApp);
-                        string sOut = "FLAT PATTERN DXF?AcadVersion=2010&OuterProfileLayer=IV_OUTER_PR​OFILE&InvisibleLayers=IV_TANGENT;IV_ARC_CENTERS;IV_BEND_DOWN;IV_BEND";
-                        _transientObjects.oDataMedium.FileName = _oFolderDXForPDF + "\\" + CustomName + oFileName + ".dxf";
-                        oCompDef.DataIO.WriteDataToFile(sOut, _transientObjects.oDataMedium.FileName);
-                        oCompDef.FlatPattern.ExitEdit();
+                        DxfSettingSave dxfSettingSave = new DxfSettingSave(oDrawDoc,gettingPath,CustomName,oFileName,false);
+                        
                     } catch (Exception ex) 
                     {
                       MessageBox.Show("Ошибка закрытия документа"+ex.Message);
                     }
-                    oDrawDoc.Close(true);
+                   oDrawDoc.Close(true);
                 }
             }
             Process.Start("explorer.exe", oFolderDrowing);

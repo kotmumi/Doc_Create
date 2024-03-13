@@ -99,6 +99,7 @@
     <Compile Include="CreatDXFOne.cs" />
     <Compile Include="CreatDoc.cs" />
     <Compile Include="CreatFolderSave.cs" />
+    <Compile Include="DxfSettingSave.cs" />
     <Compile Include="GettingPath.cs" />
     <Compile Include="Material Definition.cs" />
     <Compile Include="MyButton .cs" />
